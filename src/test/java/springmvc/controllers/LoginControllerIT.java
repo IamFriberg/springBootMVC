@@ -1,10 +1,5 @@
 package springmvc.controllers;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
-
-import java.net.URL;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,9 +10,14 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.net.URL;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.assertj.core.api.Assertions.assertThat;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class HelloIT {
+public class LoginControllerIT {
 
     @LocalServerPort
     private int port;
@@ -29,13 +29,16 @@ public class HelloIT {
 
     @Before
     public void setUp() throws Exception {
-        this.base = new URL("http://localhost:" + port + "/");
+        this.base = new URL("http://localhost:" + port + "/login");
     }
 
     @Test
-    public void getHello() throws Exception {
-        ResponseEntity<String> response = template.getForEntity(base.toString(),
-                String.class);
-        assertThat(response.getBody(), equalTo("Greetings from Spring Boot!"));
+    public void getHeadline() throws Exception {
+        //String response//; = template.getForObject(base.toString(), String.class);
+        String response = template.getForObject(base.toString(), String.class);
+        assertThat(response).contains("Login");
+        //ResponseEntity<String> response = template.getForEntity(base.toString(),
+        //        String.class);
+        //assertThat(response.getBody(), equalTo("Greetings from Spring Boot!"));
     }
 }

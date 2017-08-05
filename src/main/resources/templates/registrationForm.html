@@ -1,0 +1,37 @@
+<html xmlns:th="http://www.thymeleaf.org">>
+<head>
+    <title>Simple message display service</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--TODO Fix bootstrap dependency -->
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../css/main.css" th:href="@{/css/main.css}"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" />
+
+    <!--script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script-->
+</head>
+<body>
+    <div>
+        <h3>Create user</h3>
+        <form action="#" th:action="@{/registration}" th:object="${user}" method="post">
+            <table>
+                <tr>
+                    <td>Username:</td>
+                    <td><input type="text" th:field="*{userName}" /></td>
+                    <td th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}">Username can not be empty</td>
+                </tr>
+                <tr>
+                    <td>Password:</td>
+                    <td><input type="password" th:field="*{password}" /></td>
+                    <td th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password can not be empty</td>
+                </tr>
+                <tr>
+                    <td><button type="submit">Submit</button></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>
