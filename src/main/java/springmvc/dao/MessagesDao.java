@@ -8,8 +8,8 @@ public interface MessagesDao {
 
     boolean saveMessage(String userName, String message);
 
-    List<Message> getSingelUserMessages(String userName);
+    List<Message> getSingleUserMessages(String userName);
 
-    List<Message> getFollowingUSerMessages(String userName);
+    List<Message> getFollowingUserMessages(String userName);
 
 }

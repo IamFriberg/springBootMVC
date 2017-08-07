@@ -36,8 +36,8 @@ public class UserDaoImpl implements UserDao {
 
     /**
      * Creates a user in the database
-     * @param user
-     * @return
+     * @param user User to be created
+     * @return Returns if it was a success
      */
     @Override
     public boolean createUser(User user) {
@@ -53,7 +53,7 @@ public class UserDaoImpl implements UserDao {
     /**
      * Authenticate a user against the database
      * @param user User object
-     * @return
+     * @return Return if it was a success
      */
     @Override
     public boolean authenticateUser(User user) {
@@ -110,6 +110,4 @@ public class UserDaoImpl implements UserDao {
                     .build();
         }
     }
-
-
 }

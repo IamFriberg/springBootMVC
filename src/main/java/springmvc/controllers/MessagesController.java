@@ -26,14 +26,14 @@ public class MessagesController {
 
     @RequestMapping(value = "/messages", method = RequestMethod.GET)
     public String getMyMessages(HttpSession session, Model model) {
-        List messages = messagesDao.getSingelUserMessages(session.getAttribute("userName").toString());
+        List messages = messagesDao.getSingleUserMessages(session.getAttribute("userName").toString());
         model.addAttribute("messages", messages);
         return "messagesOverview";
     }
 
     @RequestMapping(value = "/followingmessages", method = RequestMethod.GET)
     public String getMessagesImFollowing(HttpSession session, Model model) {
-        List messages = messagesDao.getFollowingUSerMessages(session.getAttribute("userName").toString());
+        List messages = messagesDao.getFollowingUserMessages(session.getAttribute("userName").toString());
         model.addAttribute("messages", messages);
         return "followingMessagesOverview";
     }

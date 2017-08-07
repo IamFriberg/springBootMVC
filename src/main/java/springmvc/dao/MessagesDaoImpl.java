@@ -43,7 +43,7 @@ public class MessagesDaoImpl implements MessagesDao {
     }
 
     @Override
-    public List<Message> getSingelUserMessages(String userName) {
+    public List<Message> getSingleUserMessages(String userName) {
         try {
             return jdbcTemplate.query(GET_USER_MESSAGES, new MessageMapper(), userName);
         } catch (DataAccessException e) {
@@ -54,7 +54,7 @@ public class MessagesDaoImpl implements MessagesDao {
     }
 
     @Override
-    public List<Message> getFollowingUSerMessages(String userName) {
+    public List<Message> getFollowingUserMessages(String userName) {
         try {
             return jdbcTemplate.query(GET_OTHER_USERS_MESSAGES, new MessageMapper(), userName);
         } catch (DataAccessException e) {
