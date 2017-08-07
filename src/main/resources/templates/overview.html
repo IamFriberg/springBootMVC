@@ -22,6 +22,8 @@
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="/">Home</a></li>
                         <li th:if="${session.userName != null}"><a href="/users">Users</a></li>
+                        <li th:if="${session.userName != null}"><a href="/messages">My own messages</a></li>
+                        <li th:if="${session.userName != null}"><a href="/followingmessages">Messages from other users</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li th:if="${session.userName == null}"><a href="/login">Login</a></li>

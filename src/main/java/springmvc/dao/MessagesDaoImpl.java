@@ -1,0 +1,77 @@
+package springmvc.dao;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Component;
+import springmvc.dto.Message;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * Class that holds user related functionality
+ */
+@Component
+public class MessagesDaoImpl implements MessagesDao {
+    private Log log = LogFactory.getLog(MessagesDaoImpl.class);
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    private static final String CREATE_MESSAGE = "INSERT INTO messages (username, message, timestamp) VALUES (?, ?, NOW())";
+    private static final String GET_USER_MESSAGES = "SELECT username, message, timestamp FROM messages WHERE username = ? ORDER BY timestamp DESC";
+    private static final String GET_OTHER_USERS_MESSAGES = "SELECT username, message, timestamp FROM messages WHERE username = ? ORDER BY timestamp DESC";
+
+
+    @Override
+    public boolean saveMessage(String userName, String message) {
+        try {
+            return jdbcTemplate.update(CREATE_MESSAGE, userName, message) == 1;
+        } catch (DataAccessException e) {
+            log.error("Could not save message for user: " + userName);
+            return false;
+        }
+    }
+
+    @Override
+    public List<Message> getSingelUserMessages(String userName) {
+        try {
+            return jdbcTemplate.query(GET_USER_MESSAGES, new MessageMapper(), userName);
+        } catch (DataAccessException e) {
+            log.error(e);
+            log.error("Could Not fetch messages for user: " + userName);
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public List<Message> getFollowingUSerMessages(String userName) {
+        try {
+            return jdbcTemplate.query(GET_USER_MESSAGES, new MessageMapper(), userName);
+        } catch (DataAccessException e) {
+            log.error(e);
+            log.error("Could Not fetch messages for user: " + userName);
+            return Collections.emptyList();
+        }
+    }
+
+    /**
+     * Rowmapper for mapping a database row to a message object
+     */
+    private static final class MessageMapper implements RowMapper<Message> {
+        @Override
+        public Message mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return Message.builder()
+                    .userName(rs.getString("username"))
+                    .message(rs.getString("message"))
+                    .timeStamp(rs.getTimestamp("timestamp"))
+                    .build();
+        }
+    }
+}

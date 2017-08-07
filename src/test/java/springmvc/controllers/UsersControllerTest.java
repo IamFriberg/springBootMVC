@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
+/**
+ * Class for testing the logic in the controller
+ */
 @RunWith(SpringRunner.class)
 public class UsersControllerTest {
 
@@ -36,13 +39,13 @@ public class UsersControllerTest {
 
     @Test
     public void getUsersOk() {
-        when(session.getAttribute(anyString())).thenReturn("username");
         ArrayList users = new ArrayList();
         users.add("User 1");
         users.add("User 2");
+
+        when(session.getAttribute(anyString())).thenReturn("username");
         when(userDao.getUsers(anyString())).thenReturn(users);
 
-        User user = User.builder().userName("user").password("password").build();
         Assert.assertEquals(usersController.getUsers(session, model), "usersOverview");
 
         verify(userDao, times(1)).getUsers("username");
