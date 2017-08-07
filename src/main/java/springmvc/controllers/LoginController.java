@@ -50,19 +50,17 @@ public class LoginController {
             log.debug("Login form has errors");
             // redirect the user back to the same page to display the errors
             modelAndView.setViewName("loginForm");
-        } else {
-            if (userDao.authenticateUser(user)) {
-                log.info("User authenticated");
-                session.setAttribute("userName", user.userName);
-                // TODO add details to the session.
-                modelAndView.setViewName("overview");
-            } else {
-                // TODO add error to display
-                log.error("Could not authenticate user");
-                modelAndView.setViewName("loginForm");
-            }
-
         }
+        else if (userDao.authenticateUser(user)) {
+            log.info("User authenticated");
+            session.setAttribute("userName", user.userName);
+            modelAndView.setViewName("overview");
+        } else {
+            // TODO add error to display
+            log.error("Could not authenticate user");
+            modelAndView.setViewName("loginForm");
+        }
+
         return modelAndView;
     }
 
@@ -72,7 +70,7 @@ public class LoginController {
      * @return The view to show
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String loginOut(HttpSession session) {
+    public String logout(HttpSession session) {
         session.invalidate();
         log.info("User logged out");
         return "overview";

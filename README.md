@@ -10,6 +10,8 @@ Checkout: https://github.com/IamFriberg/springBootMVC
 * JDK 1.8 or later
 * Maven 3.0+
 * GIT
+* Lombok Plugin
+* Make sure you have enable annotation processing
 
 ### Installing
 Change the DB-configuration in: application.properties to point to your MySQL database.

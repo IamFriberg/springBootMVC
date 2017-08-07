@@ -30,7 +30,7 @@ public class UsersController {
      * @return The view to show
      */
     @RequestMapping(value = "/users", method = RequestMethod.GET)
-    public String users(HttpSession session, Model model) {
+    public String getUsers(HttpSession session, Model model) {
         List users = userDao.getUsers(session.getAttribute("userName").toString());
         model.addAttribute("users", users);
         return "usersOverview";

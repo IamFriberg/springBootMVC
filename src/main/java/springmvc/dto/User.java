@@ -1,19 +1,22 @@
 package springmvc.dto;
 
-import groovy.transform.builder.Builder;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.validator.constraints.NotEmpty;
 
-import javax.validation.constraints.NotNull;
 
-@Builder
+/**
+ * Data class that represent a User
+ */
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
 
-    @NotNull
+    @NonNull
     @NotEmpty
     public String userName;
-    @NotNull
+    @NonNull
     @NotEmpty
     public String password;
 }

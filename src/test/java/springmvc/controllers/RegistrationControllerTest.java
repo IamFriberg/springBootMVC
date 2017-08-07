@@ -18,7 +18,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
-public class LoginControllerTest {
+public class RegistrationControllerTest {
 
     @Mock
     private HttpSession session;
@@ -30,46 +30,40 @@ public class LoginControllerTest {
     private UserDao userDao;
 
     @InjectMocks
-    private LoginController loginController;
+    private RegistrationController registrationController;
 
     @Test
-    public void checkUserInfoOk() {
+    public void createUserOk() {
         when(bindingResult.hasErrors()).thenReturn(false);
-        when(userDao.authenticateUser(any(User.class))).thenReturn(true);
+        when(userDao.createUser(any(User.class))).thenReturn(true);
 
         User user = User.builder().userName("user").password("password").build();
-        Assert.assertEquals(loginController.checkUserInfo(session, user, bindingResult).getViewName(), "overview");
+        Assert.assertEquals(registrationController.createUser(session, user, bindingResult).getViewName(), "overview");
 
-        verify(userDao, times(1)).authenticateUser(any(User.class));
+        verify(userDao, times(1)).createUser(any(User.class));
         verify(session, times(1)).setAttribute("userName", user.getUserName());
     }
 
     @Test
-    public void checkUserInfoHasErrors() {
+    public void createUserHasErrors() {
         when(bindingResult.hasErrors()).thenReturn(true);
 
         User user = User.builder().userName("user").password("password").build();
-        Assert.assertEquals(loginController.checkUserInfo(session, user, bindingResult).getViewName(), "loginForm");
+        Assert.assertEquals(registrationController.createUser(session, user, bindingResult).getViewName(), "registrationForm");
 
-        verify(userDao, times(0)).authenticateUser(any(User.class));
+        verify(userDao, times(0)).createUser(any(User.class));
         verify(session, times(0)).setAttribute("userName", user.getUserName());
     }
 
     @Test
-    public void checkUserInfoCanNotVerifyUser() {
+    public void createUserCanNotRegisterUser() {
         when(bindingResult.hasErrors()).thenReturn(false);
-        when(userDao.authenticateUser(any(User.class))).thenReturn(false);
+        when(userDao.createUser(any(User.class))).thenReturn(false);
 
         User user = User.builder().userName("user").password("password").build();
-        Assert.assertEquals(loginController.checkUserInfo(session, user, bindingResult).getViewName(), "loginForm");
+        Assert.assertEquals(registrationController.createUser(session, user, bindingResult).getViewName(), "registrationForm");
 
-        verify(userDao, times(1)).authenticateUser(any(User.class));
+        verify(userDao, times(1)).createUser(any(User.class));
         verify(session, times(0)).setAttribute("userName", user.getUserName());
-    }
-
-    @Test
-    public void logoutOk() {
-        Assert.assertEquals(loginController.logout(session), "overview");
-        verify(session, times(1)).invalidate();
     }
 }
