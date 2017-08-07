@@ -39,11 +39,10 @@ $(document).ready(function() {
 
     function ajaxDelete(userName){
         console.log(userName);
-        // DO POST
+        // DO DELETE
         $.ajax({
             type : "DELETE",
             url : url + "?userName=" + userName,
-            //data : {userName : userName},
             success : function(result) {
                 //TODO fix better handling
             },
