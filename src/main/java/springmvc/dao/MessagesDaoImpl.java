@@ -26,7 +26,10 @@ public class MessagesDaoImpl implements MessagesDao {
 
     private static final String CREATE_MESSAGE = "INSERT INTO messages (username, message, timestamp) VALUES (?, ?, NOW())";
     private static final String GET_USER_MESSAGES = "SELECT username, message, timestamp FROM messages WHERE username = ? ORDER BY timestamp DESC";
-    private static final String GET_OTHER_USERS_MESSAGES = "SELECT username, message, timestamp FROM messages WHERE username = ? ORDER BY timestamp DESC";
+    private static final String GET_OTHER_USERS_MESSAGES =
+            "SELECT m.username, m.message, m.timestamp FROM db_springmvc.following f " +
+                    "LEFT JOIN db_springmvc.messages m ON f.followingusername = m.username " +
+                    "WHERE f.username = ? ORDER BY m.timestamp DESC;";
 
 
     @Override
@@ -53,10 +56,10 @@ public class MessagesDaoImpl implements MessagesDao {
     @Override
     public List<Message> getFollowingUSerMessages(String userName) {
         try {
-            return jdbcTemplate.query(GET_USER_MESSAGES, new MessageMapper(), userName);
+            return jdbcTemplate.query(GET_OTHER_USERS_MESSAGES, new MessageMapper(), userName);
         } catch (DataAccessException e) {
             log.error(e);
-            log.error("Could Not fetch messages for user: " + userName);
+            log.error("Could Not fetch other users messages for user: " + userName);
             return Collections.emptyList();
         }
     }
