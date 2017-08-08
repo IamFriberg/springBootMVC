@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>springmvc</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Demo project for Spring Boot MVC</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -25,7 +25,7 @@
 	</properties>
 
 	<dependencies>
-		<!-- basic starter kit -->
+		<!-- basic starter kit for easy setup -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -36,6 +36,12 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Database dependencies, we use jdbc to have a wider support for complicated queries -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 
 		<!-- Dev tools -->
@@ -58,7 +64,8 @@
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
 
-		<!-- Using thymeleaf to be able to use HTML-templates -->
+		<!-- Using thymeleaf to be able to use HTML-templates, these can also be modified and viewed
+		 without starting the application-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -90,22 +97,18 @@
 			<artifactId>bootstrap</artifactId>
 			<version>3.3.4</version>
 		</dependency>
-		<!--This will include the jquery library-->
+		<!--This will include the jquery library to be able to make Ajax calls and manipulate the DOM-->
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>jquery</artifactId>
 			<version>2.1.4</version>
 		</dependency>
-
-		<!-- Database dependencies -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-jdbc</artifactId>
-		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
+			<!--Use the maven plugin to make it easier to build and package the jar files, also flags
+			main classes as runnable and has built in dependency resolver.-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

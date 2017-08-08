@@ -44,6 +44,8 @@ public class LoginController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public ModelAndView checkUserInfo(HttpSession session, @Valid User user, BindingResult bindingResult) {
+        // A little different approach here,
+        // here we return a ModelAndView object instead of just the view name
         ModelAndView modelAndView = new ModelAndView();
         // Check if user has any fields that failed the validation
         if (bindingResult.hasErrors()) {
@@ -71,6 +73,7 @@ public class LoginController {
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public String logout(HttpSession session) {
+        // TODO a DELETE or POST is more fitting for this operation
         session.invalidate();
         log.info("User logged out");
         return "overview";

@@ -24,6 +24,12 @@ public class MessagesController {
     @Autowired
     private MessagesDao messagesDao;
 
+    /**
+     * Method for fetching the overview with the users own messages
+     * @param session The session so we can see that the user is logged in
+     * @param model Data model that is used to populate the view
+     * @return The view to show
+     */
     @RequestMapping(value = "/messages", method = RequestMethod.GET)
     public String getMyMessages(HttpSession session, Model model) {
         List messages = messagesDao.getSingleUserMessages(session.getAttribute("userName").toString());
@@ -31,6 +37,12 @@ public class MessagesController {
         return "messagesOverview";
     }
 
+    /**
+     * Method for fetching the overview with the messages from the user the user follows
+     * @param session The session so we can see that the user is logged in
+     * @param model Data model that is used to populate the view
+     * @return The view to show
+     */
     @RequestMapping(value = "/followingmessages", method = RequestMethod.GET)
     public String getMessagesImFollowing(HttpSession session, Model model) {
         List messages = messagesDao.getFollowingUserMessages(session.getAttribute("userName").toString());

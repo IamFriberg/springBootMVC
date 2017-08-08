@@ -17,25 +17,22 @@ Checkout: https://github.com/IamFriberg/springBootMVC
 Change the DB-configuration in: application.properties to point to your MySQL database.
 Set up the schema and tables needed with the queries in db/setup.sql
 
+To run the application from commandline:
 ```
-TODO Give an example
+mvn package && java -jar target/springmvc-0.0.1-SNAPSHOT.jar
 ```
 
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+Tests are found in: /tests
+Integration tests have IT in their name and needs have the application running locally.
 
+
+To run them from commandline:
 ```
-TODO Give an example
+mvn test
 ```
 
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-TODO Give an example
-```
 
 

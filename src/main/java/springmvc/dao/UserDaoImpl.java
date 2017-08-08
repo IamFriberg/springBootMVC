@@ -57,7 +57,7 @@ public class UserDaoImpl implements UserDao {
      */
     @Override
     public boolean authenticateUser(User user) {
-        // TODO Same thing here, big NO NO, we should use a SHA-1 algorithm or similar and not save plain text.
+        // TODO Same thing here, big NO NO, we should use a SHA-1 algorithm or similar and not plain text.
         try {
             return jdbcTemplate.queryForObject(VERIFY_USER, Integer.class, user.userName, user.password).equals(1);
         } catch (DataAccessException e) {
@@ -66,6 +66,12 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    /**
+     * Method for one user to follow the messages of another user
+     * @param userName UserName of the user that are following
+     * @param userNameToFollow UserName to follow
+     * @return Return if it was a success
+     */
     @Override
     public boolean followUser(String userName, String userNameToFollow) {
         try {
@@ -76,6 +82,12 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
+    /**
+     * Method for one user to unfollow the messages of another user
+     * @param userName UserName of the user that are following
+     * @param userNameToFollow UserName to unfollow
+     * @return Return if it was a success
+     */
     @Override
     public boolean unFollowUser(String userName, String userNameToFollow) {
         try {
@@ -101,6 +113,10 @@ public class UserDaoImpl implements UserDao {
             return Collections.emptyList();
         }
     }
+
+    /**
+     * RowMapper for mapping a database row to a FollowUser object
+     */
     private static final class FollowUserMapper implements RowMapper<FollowUser> {
         @Override
         public FollowUser mapRow(ResultSet rs, int rowNum) throws SQLException {

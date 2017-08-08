@@ -42,7 +42,7 @@ public class RegistrationController {
      * @param session The session so we can add that the user is logged in
      * @param user User information
      * @param bindingResult Contains any validation errors
-     * @return
+     * @return The view to show
      */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView createUser(HttpSession session, @Valid User user, BindingResult bindingResult) {

@@ -32,6 +32,12 @@ public class MessagesDaoImpl implements MessagesDao {
                     "WHERE f.username = ? ORDER BY m.timestamp DESC;";
 
 
+    /**
+     * Save a message for a user
+     * @param userName UserName of the user
+     * @param message Message to save
+     * @return If it was saved or not
+     */
     @Override
     public boolean saveMessage(String userName, String message) {
         try {
@@ -42,6 +48,11 @@ public class MessagesDaoImpl implements MessagesDao {
         }
     }
 
+    /**
+     * Get all the message for a specific user
+     * @param userName UserName of the user
+     * @return A list of all the messages
+     */
     @Override
     public List<Message> getSingleUserMessages(String userName) {
         try {
@@ -53,6 +64,11 @@ public class MessagesDaoImpl implements MessagesDao {
         }
     }
 
+    /**
+     * Get all messages the users a user are following.
+     * @param userName User that follows other users
+     * @return A list of all the messages
+     */
     @Override
     public List<Message> getFollowingUserMessages(String userName) {
         try {
@@ -65,7 +81,7 @@ public class MessagesDaoImpl implements MessagesDao {
     }
 
     /**
-     * Rowmapper for mapping a database row to a message object
+     * RowMapper for mapping a database row to a message object
      */
     private static final class MessageMapper implements RowMapper<Message> {
         @Override
